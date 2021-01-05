@@ -1,4 +1,8 @@
-//AGAR salts threshold
+//Simple greyscale threshold for images of single or multiple clasts on a background
+//Requires MorphoLibJ plugin for ImageJ
+//Default grey scale smoothing opening size in line 44
+//Default dilation and erosion element size in lines 46 and 56
+//Default size minimum of 5 pixel (adjust in line 56).
 
 //macro "Choose parent directory" {
 	parent=getDirectory("Choose parent directory");
