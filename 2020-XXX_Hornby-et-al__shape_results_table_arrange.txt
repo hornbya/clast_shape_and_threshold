@@ -1,0 +1,114 @@
+parent=getDirectory("Choose grandparent directory");
+list=getFileList(parent);
+
+for (i = 0; i < list.length; i++) {
+dirName = list[i];
+dir=parent+File.separator+dirName;
+///if (endsWith(list[i], ".jpg"))
+//continue
+//if (endsWith(list[i], ".txt"))
+//continue
+sr=dir+File.separator+"shape results.csv";
+///if (File.exists(thresholdimage)) {
+open(sr);
+srn=File.separator+File.getName(sr);
+IJ.renameResults(srn, "Results");
+Table.deleteColumn("Area"); 
+Table.deleteColumn("Perim.");
+Table.deleteColumn("CH Perim.");
+Table.deleteColumn("CH Area");
+//Table.deleteColumn("Solidity"); 
+Table.deleteColumn("Convexity");
+Table.deleteColumn("FormFactor");
+Table.deleteColumn("Circularity");
+Table.deleteColumn("Roundness"); 
+Table.deleteColumn("AR feret");
+Table.deleteColumn("Feret d");
+Table.deleteColumn("MinFeret d");
+Table.deleteColumn("Orientation");
+
+run("Read and Write Excel", "no_count_column file=[/Users/Adrian/Dropbox (Uni München)/MischMasch data/b Fotos/0,05kg experiments/0.05kg_shapesummary.xlsx] sheet=SLD dataset_label="+dirName);
+close("Results");
+
+open(sr);
+srn=File.separator+File.getName(sr);
+IJ.renameResults(srn, "Results");
+Table.deleteColumn("Area"); 
+Table.deleteColumn("Perim.");
+Table.deleteColumn("CH Perim.");
+Table.deleteColumn("CH Area");
+Table.deleteColumn("Solidity"); 
+//Table.deleteColumn("Convexity");
+Table.deleteColumn("FormFactor");
+Table.deleteColumn("Circularity");
+Table.deleteColumn("Roundness"); 
+Table.deleteColumn("AR feret");
+Table.deleteColumn("Feret d");
+Table.deleteColumn("MinFeret d");
+Table.deleteColumn("Orientation");
+
+run("Read and Write Excel", "no_count_column file=[/Users/Adrian/Dropbox (Uni München)/MischMasch data/b Fotos/0,05kg experiments/0.05kg_shapesummary.xlsx] sheet=CVX dataset_label="+dirName);
+close("Results");
+
+open(sr);
+srn=File.separator+File.getName(sr);
+IJ.renameResults(srn, "Results");
+Table.deleteColumn("Area"); 
+Table.deleteColumn("Perim.");
+Table.deleteColumn("CH Perim.");
+Table.deleteColumn("CH Area");
+Table.deleteColumn("Solidity"); 
+Table.deleteColumn("Convexity");
+//Table.deleteColumn("FormFactor");
+Table.deleteColumn("Circularity");
+Table.deleteColumn("Roundness"); 
+Table.deleteColumn("AR feret");
+Table.deleteColumn("Feret d");
+Table.deleteColumn("MinFeret d");
+Table.deleteColumn("Orientation");
+
+run("Read and Write Excel", "no_count_column file=[/Users/Adrian/Dropbox (Uni München)/MischMasch data/b Fotos/0,05kg experiments/0.05kg_shapesummary.xlsx] sheet=FF dataset_label="+dirName);
+close("Results");
+
+
+open(sr);
+srn=File.separator+File.getName(sr);
+IJ.renameResults(srn, "Results");
+Table.deleteColumn("Area"); 
+Table.deleteColumn("Perim.");
+Table.deleteColumn("CH Perim.");
+Table.deleteColumn("CH Area");
+Table.deleteColumn("Solidity"); 
+Table.deleteColumn("Convexity");
+Table.deleteColumn("FormFactor");
+Table.deleteColumn("Circularity");
+Table.deleteColumn("Roundness"); 
+//Table.deleteColumn("AR feret");
+Table.deleteColumn("Feret d");
+Table.deleteColumn("MinFeret d");
+Table.deleteColumn("Orientation");
+
+run("Read and Write Excel", "no_count_column file=[/Users/Adrian/Dropbox (Uni München)/MischMasch data/b Fotos/0,05kg experiments/0.05kg_shapesummary.xlsx] sheet=AR dataset_label="+dirName);
+close("Results");
+
+open(sr);
+srn=File.separator+File.getName(sr);
+IJ.renameResults(srn, "Results");
+//Table.deleteColumn("Area"); 
+Table.deleteColumn("Perim.");
+Table.deleteColumn("CH Perim.");
+Table.deleteColumn("CH Area");
+Table.deleteColumn("Solidity"); 
+Table.deleteColumn("Convexity");
+Table.deleteColumn("FormFactor");
+Table.deleteColumn("Circularity");
+Table.deleteColumn("Roundness"); 
+Table.deleteColumn("AR feret");
+Table.deleteColumn("Feret d");
+Table.deleteColumn("MinFeret d");
+Table.deleteColumn("Orientation");
+
+run("Read and Write Excel", "no_count_column file=[/Users/Adrian/Dropbox (Uni München)/MischMasch data/b Fotos/0,05kg experiments/0.05kg_shapesummary.xlsx] sheet=Area dataset_label="+dirName);
+close("Results");
+run("Close All");
+}

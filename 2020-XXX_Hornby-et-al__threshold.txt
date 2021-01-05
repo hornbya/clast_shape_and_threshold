@@ -1,0 +1,62 @@
+//AGAR salts threshold
+
+//macro "Choose parent directory" {
+	parent=getDirectory("Choose parent directory");
+	list=getFileList(parent);
+//}
+//macro "reset" {
+	run("Clear Results"); //reset results table, close open images, clear log
+	if (nImages>0) 
+		close("*");
+	print("\\Clear");
+//}	
+
+for (i = 0; i < list.length; i++) {
+	dirName = list[i];
+	dir=parent+dirName;	
+	open(dir); //define filenames
+	sampleName=File.nameWithoutExtension;
+	savedir=parent + File.separator+sampleName;
+	orig=getTitle();
+	File.makeDirectory(savedir);
+	
+	setTool("line");//set scale and crop area
+	waitForUser("measure scale");
+	run("Set Scale...");
+	setTool("polygon");
+	waitForUser("Select area to measure");	
+	run("Crop");
+	setBackgroundColor(255, 255, 255);
+	//run("Clear Outside");
+	path1=savedir+File.separator+"crop.tif";
+	save(path1);
+	run("Duplicate...", " ");
+	cropped=getImageID();
+	close(orig);
+	
+	selectImage(cropped); //threshold salts and crystals
+	run("Brightness/Contrast...");
+	waitForUser("set brightness and contrast");
+	run("Close");
+	run("8-bit");
+	run("Gray Scale Attribute Filtering", "operation=[Opening] attribute=Area minimum=500 connectivity=4");
+	run("Morphological Filters", "operation=Dilation element=Diamond radius=1");
+	//run("Add Image...", "image=[orig] x=0 y=0 opacity=50");
+	setAutoThreshold("Default");
+	run("Threshold...");
+	waitForUser("set threshold");
+	//setThreshold(0, 28);
+	setOption("BlackBackground", false);
+	run("Convert to Mask");
+	run("Close");
+	run("Invert");
+	run("Morphological Filters", "operation=Erosion element=Diamond radius=1");
+	thrhld=getImageID();
+	run("Analyze Particles...", "size=5-Infinity pixel show=Masks");
+	//run("Morphological Filters", "operation=Dilation element=Diamond radius=1");
+	path2=savedir+File.separator+"threshold.tif";
+	saveAs("Tiff", path2);
+	theshold=getImageID();
+	close(thrhld);
+	close("*");
+}
