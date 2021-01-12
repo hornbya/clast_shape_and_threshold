@@ -1,5 +1,9 @@
 //Simple greyscale threshold for images of single or multiple clasts on a background
-//Requires MorphoLibJ plugin for ImageJ
+//The macro will run through all image files in the 'Parent directory' folder
+//Threshold files are saved in a folder (with folder name=input file name)
+//Requires MorphoLibJ plugin for ImageJ (Help > Update... > Update sites > IJPB plugins)
+
+//Default settings
 //Default grey scale smoothing opening size in line 44
 //Default dilation and erosion element size in lines 46 and 56
 //Default size minimum of 5 pixel (adjust in line 56).
