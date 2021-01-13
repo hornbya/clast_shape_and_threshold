@@ -1,3 +1,14 @@
+//Simple shape measurements for thresholded and scaled binary images of single or multiple clasts on a background
+//The macro will sequentially open image files in subdirectories within a 'Grandparent directory'.
+//Shape results .csv files are saved in the input file folder by default
+//Requires Shape Filter plugin for ImageJ (Help > Update... > Update sites > Biomedgroup)
+
+//Lines 32-50 provide the option to threshold and scale input images
+
+//Default settings
+//Default size minimum of 100 pixels (Lines 54-57 allow the user to define in a dialog box - deactivate (//) line 58 if using)
+	
+	
 	parent=getDirectory("Choose grandparent directory");
 	list=getFileList(parent);
 
@@ -8,7 +19,7 @@
 	
 	thresholdimage=dir+"threshold.tif";
 	print(thresholdimage);	
-	///if (File.exists(thresholdimage)) {
+	//if (File.exists(thresholdimage)) {
 	open(thresholdimage);
 	//}	
 	//else
