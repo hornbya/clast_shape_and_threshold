@@ -1,14 +1,15 @@
 //Simple greyscale threshold for images of single or multiple clasts on a background
 //The macro will run through all image files in the 'Parent directory' folder
-//Threshold files are saved in a folder (with folder name=input file name)
+//Threshold files are saved in subfolders in an "output" folder (with subfolder name=input file name)
 //Requires MorphoLibJ plugin for ImageJ (Help > Update... > Update sites > IJPB plugins)
 
 //Default settings
-//Default grey scale smoothing opening size in line 44
-//Default dilation and erosion element size in lines 46 and 56
-//Default size minimum of 5 pixel (adjust in line 56).
+//Default grey scale smoothing opening size in line 54
+//Default dilation and erosion element size in lines 55 and 65
+//Default size minimum of 100 pixels (adjust in line 67).
 
 //macro "Choose parent directory" {
+	setOption("BlackBackground", true);
 	parent=getDirectory("Choose parent directory");
 	list=getFileList(parent);
 //}
@@ -24,14 +25,17 @@ for (i = 0; i < list.length; i++) {
 	dir=parent+dirName;	
 	open(dir); //define filenames
 	sampleName=File.nameWithoutExtension;
-	savedir=parent + File.separator+sampleName;
+	saveparent=parent +"output";
+	File.makeDirectory(saveparent);
+	savedir=saveparent+File.separator+sampleName;
+	print(savedir);
 	orig=getTitle();
 	File.makeDirectory(savedir);
 	
 	setTool("line");//set scale and crop area
 	waitForUser("measure scale");
 	run("Set Scale...");
-	setTool("polygon");
+	setTool("rectangle");
 	waitForUser("Select area to measure");	
 	run("Crop");
 	setBackgroundColor(255, 255, 255);
@@ -43,25 +47,26 @@ for (i = 0; i < list.length; i++) {
 	close(orig);
 	
 	selectImage(cropped); //threshold salts and crystals
-	run("Brightness/Contrast...");
-	waitForUser("set brightness and contrast");
-	run("Close");
+	//run("Brightness/Contrast...");
+	//waitForUser("set brightness and contrast");
+	//run("Close");
 	run("8-bit");
 	run("Gray Scale Attribute Filtering", "operation=[Opening] attribute=Area minimum=500 connectivity=4");
 	run("Morphological Filters", "operation=Dilation element=Diamond radius=1");
 	//run("Add Image...", "image=[orig] x=0 y=0 opacity=50");
 	setAutoThreshold("Default");
 	run("Threshold...");
-	waitForUser("set threshold");
+	waitForUser("set threshold so target is white and background is black...  then click Apply");
 	//setThreshold(0, 28);
-	setOption("BlackBackground", false);
+	//setOption("BlackBackground", false);
 	run("Convert to Mask");
 	run("Close");
 	run("Invert");
 	run("Morphological Filters", "operation=Erosion element=Diamond radius=1");
 	thrhld=getImageID();
-	run("Analyze Particles...", "size=5-Infinity pixel show=Masks");
+	run("Analyze Particles...", "size=100-Infinity pixel show=Masks");
 	//run("Morphological Filters", "operation=Dilation element=Diamond radius=1");
+	run("Fill Holes");
 	path2=savedir+File.separator+"threshold.tif";
 	saveAs("Tiff", path2);
 	theshold=getImageID();
