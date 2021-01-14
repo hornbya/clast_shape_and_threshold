@@ -1,15 +1,14 @@
 //This macro uses Read and Write Excel to tranpose results columns from shape data
-//output by the Salts AGAR 18K macros into labelled tabs in an Excel sheet.
+//output by the simple_shape macro into labelled tabs in an Excel sheet.
 
-//Default settings: All shape results data within subfolders of selected input directory 
-//are processed in sequence. Shape columns extracted are: Area, Perimeter, Solidity,
-//Form factor, Roundness, Feret diameter and Orientation.
 
+//*****************************************************
 //***Rearranged Excel file is saved on the desktop as
 //'Rename me after writing is done.xlsx"***.
+//******************************************************
 
 macro "Shape results table arrangement" {
-	parent=getDirectory("Choose grandparent directory");
+	parent=getDirectory("Select output directory");
 	list=getFileList(parent);
 
 	Dialog.create("Column options");
@@ -35,10 +34,11 @@ macro "Shape results table arrangement" {
 	
 	for (i = 0; i < list.length; i++) {
 		dirName = list[i];
-		dir=parent+File.separator+dirName;
-		sr=dir+File.separator+"-results.csv";
+		dir=parent+dirName;
+		sr=dir+"results.csv";
 		open(sr);
-		srn=File.separator+File.getName(sr);
+		srn=File.getName(sr);
+
 
 		if (area==true) {
 			IJ.renameResults(srn, "Results");
@@ -120,8 +120,7 @@ macro "Shape results table arrangement" {
 			close("Results");
 		}
 		if (solidity==true) {
-			open(sr);
-			srn=File.separator+File.getName(sr);	
+			open(sr);	
 			IJ.renameResults(srn, "Results");
 			Table.deleteColumn("Area"); 
 			Table.deleteColumn("Perim.");
@@ -142,7 +141,6 @@ macro "Shape results table arrangement" {
 		}
 		if (convexity==true) {	
 			open(sr);
-			srn=File.separator+File.getName(sr);
 			IJ.renameResults(srn, "Results");
 			Table.deleteColumn("Area"); 
 			Table.deleteColumn("Perim.");
@@ -163,7 +161,6 @@ macro "Shape results table arrangement" {
 		}
 		if (formFactor==true) {
 			open(sr);
-			srn=File.separator+File.getName(sr);
 			IJ.renameResults(srn, "Results");
 			Table.deleteColumn("Area"); 
 			Table.deleteColumn("Perim.");
@@ -184,7 +181,6 @@ macro "Shape results table arrangement" {
 		}
 		if (circularity==true) {
 			open(sr);
-			srn=File.separator+File.getName(sr);
 			IJ.renameResults(srn, "Results");
 			Table.deleteColumn("Area"); 
 			Table.deleteColumn("Perim.");
@@ -205,7 +201,6 @@ macro "Shape results table arrangement" {
 		}
 		if (roundness==true) {
 			open(sr);
-			srn=File.separator+File.getName(sr);
 			IJ.renameResults(srn, "Results");
 			Table.deleteColumn("Area"); 
 			Table.deleteColumn("Perim.");
