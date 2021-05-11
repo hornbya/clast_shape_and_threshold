@@ -1,7 +1,9 @@
 //Simple shape measurements for thresholded and scaled binary images of single or multiple clasts on a background
-//The macro is designed to be used after thresholding images with the 'Simple threshold' macro.
-//The macro will sequentially open binary image files in subdirectories within an 'output' directory'.
-//Shape results .csv files are saved in the input file folder by default
+//The macro is designed as a standalone tool to measure size and shape parameters of a binary image containing one or more particles.
+//A separate image file with particle labelled to match analysis results is also saved for each image. 
+//The macro will sequentially open binary image files in a directory chosen by the user.
+//Output files are saved in the same directory, as the file name with -Results or -Labels appended.
+//Shape results .csv files are saved in the input file folder by default.
 //Requires Shape Filter plugin for ImageJ (Help > Update... > Update sites > Biomedgroup)
 
 
